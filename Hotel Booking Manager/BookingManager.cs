@@ -17,7 +17,7 @@ namespace HotelBookingManager
             EnsureNoOverlap(b.RoomNumber, b.CheckIn, b.CheckOut, null);
             _bookings.Add(b);
         }
-        }
+        
 
         public bool Cancel(string roomNumber, string guestName)
         {
