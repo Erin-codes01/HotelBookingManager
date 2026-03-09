@@ -26,7 +26,7 @@ namespace HotelBookingManager
 
         // --- Button Event Handlers ---
 
-        private void BtnBook_Click(object sender, EventArgs e)
+        private void BtnBook_Click(object? sender, EventArgs e)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace HotelBookingManager
             }
         }
 
-        private void BtnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object? sender, EventArgs e)
         {
             string guest = txtGuestName.Text.Trim();
             string room = txtRoomNumber.Text.Trim();
@@ -75,12 +75,12 @@ namespace HotelBookingManager
             }
         }
 
-        private void BtnView_Click(object sender, EventArgs e)
+        private void BtnView_Click(object? sender, EventArgs e)
         {
             RefreshList();
         }
 
-        private void BtnExit_Click(object sender, EventArgs e)
+        private void BtnExit_Click(object? sender, EventArgs e)
         {
             this.Close();
         }
