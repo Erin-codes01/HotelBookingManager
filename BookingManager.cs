@@ -12,63 +12,41 @@ namespace HotelBookingManager
 
         public void Add(Booking b)
         {
-            //Call EnsureNoOverlap. If it passes, add the booking
-
             EnsureNoOverlap(b.RoomNumber, b.CheckIn, b.CheckOut, null);
             _bookings.Add(b);
-        }
         }
 
         public bool Cancel(string roomNumber, string guestName)
         {
-            //Example on how to crawl the list for a booking based on name and room number:
-			var toRemove = _bookings.FirstOrDefault(b =>
+            var toRemove = _bookings.FirstOrDefault(b =>
                 b.RoomNumber.Equals(roomNumber, StringComparison.OrdinalIgnoreCase) &&
-                b.GuestName .Equals(guestName,  StringComparison.OrdinalIgnoreCase));
+                b.GuestName.Equals(guestName, StringComparison.OrdinalIgnoreCase));
 
-            //if the var is null, return false, otherwise remove the booking and return true
-
-            if (toRemove == null)
-                return false;
+            if (toRemove == null) return false;
 
             _bookings.Remove(toRemove);
             return true;
-
         }
 
         public bool TryFind(string roomNumber, string guestName, out Booking? booking)
         {
-            //check the entire list for that booking based on room number and guest name.
-
-            booking = _bookings.FirstOrDefault(b => 
-               b.RoomNumber.Equals(roomNumber, StringComparison.OrdinalIgnoreCase) &&
-               b.GuestName.Equals(guestName, StringComparison.OrdinalIgnoreCase));
-
-            //if the reservation exists, return the booking != null		
+            booking = _bookings.FirstOrDefault(b =>
+                b.RoomNumber.Equals(roomNumber, StringComparison.OrdinalIgnoreCase) &&
+                b.GuestName.Equals(guestName, StringComparison.OrdinalIgnoreCase));
 
             return booking != null;
         }
 
-        //Create a public bool IsAvailable() pass in roomNumber and DateTime for checkIn and checkOut
-
         public bool IsAvailable(string roomNumber, DateTime checkIn, DateTime checkOut)
         {
-
-            //Use a try catch block run EnsureNoOverlap. Return true if successful, catch and return false if not
-
             try
             {
                 EnsureNoOverlap(roomNumber, checkIn, checkOut, null);
                 return true;
             }
-            catch 
-            {
-                return false;
-            }
-
+            catch { return false; }
         }
 
-            //!!! Helper method for you to check if a room has an overlapping visit. Do not modify
         private void EnsureNoOverlap(string roomNumber, DateTime checkIn, DateTime checkOut, Booking? except)
         {
             bool Overlaps(Booking a) => a.CheckIn < checkOut && checkIn < a.CheckOut;
@@ -79,10 +57,8 @@ namespace HotelBookingManager
                 if (!existing.RoomNumber.Equals(roomNumber, StringComparison.OrdinalIgnoreCase)) continue;
 
                 if (Overlaps(existing))
-                {
                     throw new InvalidOperationException(
                         $"Room {roomNumber} already booked {existing.CheckIn:MM/dd HH:mm}–{existing.CheckOut:MM/dd HH:mm}.");
-                }
             }
         }
     }
